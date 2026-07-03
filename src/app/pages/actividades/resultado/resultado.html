@@ -1,0 +1,86 @@
+<app-header></app-header>
+
+<div class="position-absolute close-confetti" style="z-index: 2000;">
+  <canvas id="my-canvas"></canvas>
+</div>
+
+<main class="container">
+
+  <div *ngIf="!isLoading && reporte; else loadingTemplate">
+    <div class="w-full">
+      <h2 class="text-center color-green fs-2 fw-bold my-4">Registro de actividades diarias</h2>
+      <p class="text-center fs-5 mt-4">Para calcular la huella de carbono</p>
+      <div class="flex items-center justify-center gap-2">
+        <i class="fas fa-check-circle fs-1"></i>
+        <span class="fs-5">Datos registrados</span>
+      </div>
+
+      <span *ngIf="puntosGanados > 0" class="d-flex justify-content-center w-100 fs-6 text-center color-secondary">
+        +{{ puntosGanados }} POINTS
+      </span>
+
+      <div class="text-center mt-3" *ngIf="puntosGanados > 0">
+        <p class="small text-muted mb-2">¡Presume tu logro!</p>
+        <div class="d-flex justify-content-center gap-3">
+
+          <button class="btn btn-outline-primary rounded-circle p-2" (click)="compartirLogro('whatsapp')" title="Compartir en WhatsApp">
+            <i class="fab fa-whatsapp fa-lg"></i>
+          </button>
+
+          <button class="btn btn-outline-dark rounded-circle p-2" (click)="compartirLogro('twitter')" title="Compartir en X">
+            <i class="fab fa-twitter fa-lg"></i>
+          </button>
+
+          <button class="btn btn-outline-primary rounded-circle p-2" (click)="compartirLogro('linkedin')" title="Compartir en LinkedIn">
+            <i class="fab fa-linkedin-in fa-lg"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+    <h3 class="my-6 fs-4 fw-bold">Resultados de hoy :</h3>
+
+    <div class="container-chart mb-4">
+      <div class="container-canva">
+        <canvas id="myChart" #myChartCanvas></canvas>
+      </div>
+      <div class="container-description">
+
+        <p class="fs-2">El total de emisiones netas es de {{ reporte.totalKgCO2e | number:'1.2-2' }} kg de CO₂, considerando las siguientes categorías:</p>
+
+        <div class="flex flex-col gap-4 mt-4">
+          <div class="flex items-center gap-2">
+            <div class="slot-color bg-01"></div>
+            <span class="fs-6 fw-medium">Transporte: {{ reporte.transporteKgCO2e | number:'1.2-2' }} kg</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="slot-color bg-02"></div>
+            <span class="fs-6 fw-medium">Energía: {{ reporte.energiaKgCO2e | number:'1.2-2' }} kg</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="slot-color bg-03"></div>
+            <span class="fs-6 fw-medium">Residuos: {{ reporte.residuosKgCO2e | number:'1.2-2' }} kg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center my-4">
+      <button class="btn btn-primary px-4" (click)="goHome()">
+        <i class="fa-solid fa-house me-2"></i> Volver al inicio
+      </button>
+    </div>
+
+  </div>
+
+  <ng-template #loadingTemplate>
+    <div class="text-center" style="padding: 150px 0; text-align: center;">
+      <h2 class="fs-3">Calculando tus resultados...</h2>
+      <p class="fs-5">Esto tomará solo un segundo.</p>
+      <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </ng-template>
+
+</main>

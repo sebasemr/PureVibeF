@@ -1,0 +1,59 @@
+<app-header></app-header>
+
+<main class="store-container">
+
+  <div class="points-panel">
+    <div>
+      <h1 class="fs-2 fw-bold text-green m-0">Tienda de Recompensas</h1>
+      <p class="text-secondary fs-5 mt-1">Gasta tus puntos en premios sostenibles.</p>
+    </div>
+    <div *ngIf="isLoading" class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <div *ngIf="!isLoading && estadoUsuario" class="points-display">
+      <span class="label">Tus Puntos PureVibe</span>
+      <span class="points">{{ estadoUsuario.puntosTotales }}</span>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p>Cargando recompensas...</p>
+  </div>
+
+  <div *ngIf="!isLoading" class="rewards-grid">
+
+    <div class="reward-card" *ngFor="let item of recompensas">
+
+      <div [ngSwitch]="item.id">
+
+        <img *ngSwitchCase="1" src="assets/tienda/recompensa-cupon.jpg" class="reward-card-image" [alt]="item.nombre">
+        <img *ngSwitchCase="2" src="assets/tienda/recompensa-botella.jpg" class="reward-card-image" [alt]="item.nombre">
+        <img *ngSwitchCase="3" src="assets/tienda/recompensa-bolsas.png" class="reward-card-image" [alt]="item.nombre">
+        <img *ngSwitchCase="4" src="assets/tienda/recompensa-semillas.jpg" class="reward-card-image" [alt]="item.nombre">
+        <img *ngSwitchCase="5" src="assets/tienda/recompensa-cubiertos.svg" class="reward-card-image" [alt]="item.nombre">
+        <img *ngSwitchCase="6" src="assets/tienda/recompensa-planta.jpg" class="reward-card-image" [alt]="item.nombre">
+
+        <img *ngSwitchDefault src="assets/tienda/default.png" class="reward-card-image" [alt]="item.nombre">
+      </div>
+
+      <div class="reward-card-body">
+        <h5 class="reward-card-title">{{ item.nombre }}</h5>
+        <p class="reward-card-description">{{ item.descripcion }}</p>
+
+        <div class="reward-card-footer">
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="reward-cost">{{ item.costoPuntos }} Puntos</span>
+            <button
+              class="btn btn-canjear"
+              (click)="onCanjear(item)"
+              [disabled]="!estadoUsuario || estadoUsuario.puntosTotales < item.costoPuntos">
+              Canjear
+            </button>
+          </div>
+          <div *ngIf="estadoUsuario && estadoUsuario.puntosTotales < item.costoPuntos" class="points-needed-error">
+            Te faltan {{ item.costoPuntos - estadoUsuario.puntosTotales }} puntos
+          </div>
+        </div>
+      </div>
+    </div> </div> </main>

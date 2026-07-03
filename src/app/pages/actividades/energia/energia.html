@@ -1,0 +1,78 @@
+<app-header></app-header>
+
+<main class="container">
+  <h1 class="text-center color-green fs-2 fw-bold my-4">Registro de actividades diarias</h1>
+
+  <form class="form-container" (ngSubmit)="onSubmit()" #energiaForm="ngForm">
+    <h2 class="fs-3 text-center">2. Energía</h2>
+
+    <div class="form-section">
+      <label for="electricity" class="fs-6">1. ¿Cuánto consumo eléctrico has tenido hoy (en kWh)?</label>
+      <div class="input-group d-flex align-items-center gap-3 mt-3">
+        <i class="fa-solid fa-bolt fs-1"></i>
+        <input type="number" id="electricity" name="electricity" class="form-control"
+               placeholder="Introduce el consumo en kWh"
+               [(ngModel)]="formData.electricity"
+               min="0"
+               #electricityInput="ngModel">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label class="fs-6">2. ¿Utilizaste calefacción o aire acondicionado hoy?</label>
+      <div class="checkbox-group">
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="yes" name="heating"
+                 [(ngModel)]="formData.heating"> Sí
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="no" name="heating"
+                 [(ngModel)]="formData.heating"> No
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label for="heatingTime" class="fs-6">Si usaste calefacción/aire acondicionado, ¿cuánto tiempo lo tuviste encendido (en horas)?</label>
+      <div class="input-group d-flex align-items-center gap-3 mt-3">
+        <i class="fa-solid fa-clock fs-1"></i>
+        <input type="number" id="heatingTime" name="heatingTime" class="form-control"
+               placeholder="Introduce el tiempo en horas"
+               [(ngModel)]="formData.heatingTime"
+               [disabled]="formData.heating !== 'yes'"
+               min="0">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label class="fs-6">3. Tiempo de uso de dispositivos electrónicos hoy (computadora, TV, consola, etc.):</label>
+      <div class="checkbox-group">
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="less2" name="electronics"
+                 [(ngModel)]="formData.electronics" required> Menos de 2 horas
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="2to4" name="electronics"
+                 [(ngModel)]="formData.electronics" required> 2-4 horas
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="more4" name="electronics"
+                 [(ngModel)]="formData.electronics" required> Más de 4 horas
+        </label>
+      </div>
+    </div>
+
+    <div class="content_button d-flex justify-content-between mt-4">
+      <div class="submit-button">
+        <button type="button" (click)="goBack()" class="btn btn-outline-primary">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+      </div>
+      <div class="submit-button">
+        <button type="submit" class="btn btn-primary" [disabled]="!energiaForm.form.valid">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</main>

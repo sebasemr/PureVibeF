@@ -1,0 +1,8 @@
+.text-green { color: #0D47A1; }
+.quiz-container { max-width: 700px; }
+.card { border-radius: 16px; border: none; }
+.option-btn { text-align: left; padding: 1rem; border-width: 2px; font-weight: 500; transition: all 0.2s; }
+.option-btn:hover { transform: translateY(-2px); }
+/* Forzar colores al acertar/fallar */
+.btn-primary { background-color: #1565C0 !important; color: white !important; border-color: #1565C0 !important; }
+.btn-danger { background-color: #dc3545 !important; color: white !important; border-color: #dc3545 !important; }

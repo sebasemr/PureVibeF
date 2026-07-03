@@ -1,0 +1,119 @@
+<app-header></app-header>
+
+<main class="profile-container">
+
+  <div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div *ngIf="!isLoading && profile" class="profile-content animate-fade-in">
+
+    <mat-card class="profile-header-card mat-elevation-z2">
+      <mat-card-content class="header-layout">
+
+        <div class="identity-section">
+          <div class="avatar-wrapper">
+            <div class="avatar-circle">
+              <span class="initials">{{ profile.username.charAt(0).toUpperCase() }}</span>
+            </div>
+          </div>
+
+          <div class="user-details">
+            <h1 class="username">{{ profile.username }}</h1>
+            <p class="email">{{ profile.email }}</p>
+
+            <div class="badges-container">
+              <span *ngIf="profile.nombreFamilia" class="role-badge familiar">
+                <mat-icon class="badge-icon"></mat-icon> {{ profile.nombreFamilia }}
+              </span>
+
+              <span *ngIf="profile.nombreInstitucion" class="role-badge institucional">
+                <mat-icon class="badge-icon"></mat-icon> {{ profile.nombreInstitucion }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-actions-section">
+          <div class="stat-card">
+            <span class="stat-label">Huella Anual</span>
+            <div class="stat-number">
+              {{ (profile.huellaTotalKgCO2e || 0) | number:'1.0-2' }} <span class="unit">kg</span>
+            </div>
+          </div>
+
+          <button mat-flat-button color="accent" routerLink="/recomendaciones" class="btn-recomendaciones">
+            <mat-icon></mat-icon>
+            Ver Recomendaciones
+          </button>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <mat-tab-group class="profile-tabs mat-elevation-z2" animationDuration="300ms" dynamicHeight>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon"></mat-icon> Mis Datos
+        </ng-template>
+
+        <div class="tab-content">
+          <h3 class="tab-title">Información de la Cuenta</h3>
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nombre de Usuario</mat-label>
+                <input matInput [value]="profile.username" readonly>
+                <mat-icon matSuffix></mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Correo Electrónico</mat-label>
+                <input matInput [value]="profile.email" readonly>
+                <mat-icon matSuffix></mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon"></mat-icon> Seguridad
+        </ng-template>
+
+        <div class="tab-content">
+          <h3 class="tab-title">Actualizar Contraseña</h3>
+
+          <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="security-form">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Nueva Contraseña</mat-label>
+              <input matInput type="password" formControlName="newPassword" required>
+              <mat-icon matSuffix>lock</mat-icon>
+              <mat-error *ngIf="passwordForm.get('newPassword')?.hasError('required')">Requerido</mat-error>
+              <mat-error *ngIf="passwordForm.get('newPassword')?.hasError('minlength')">Mínimo 6 caracteres</mat-error>
+            </mat-form-field>
+
+            <div *ngIf="successMessage" class="alert-box success">
+              <mat-icon>check_circle</mat-icon> {{ successMessage }}
+            </div>
+
+            <div *ngIf="errorMessage" class="alert-box error">
+              <mat-icon>error</mat-icon> {{ errorMessage }}
+            </div>
+
+            <div class="form-actions">
+              <button mat-raised-button color="primary" type="submit" [disabled]="passwordForm.invalid">
+                Guardar Cambios
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+</main>

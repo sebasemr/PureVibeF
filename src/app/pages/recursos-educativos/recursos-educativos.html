@@ -1,0 +1,105 @@
+<app-header></app-header>
+
+<main class="container my-5">
+  <div class="text-center col-md-8 mx-auto">
+    <h1 class="text-center text-green fw-bold mb-3">Recursos Educativos</h1>
+    <p class="text-center fs-5 text-secondary">
+      Explora nuestra biblioteca de artículos, videos y guías para aprender a reducir tu impacto ambiental.
+    </p>
+  </div>
+
+  <div class="filters-bar my-4 d-flex flex-wrap justify-content-center gap-2">
+    <button class="btn" [class.btn-primary]="filtroTipo === ''" [class.btn-outline-secondary]="filtroTipo !== ''"
+            (click)="filtrarPorTipo('')">
+      Todos
+    </button>
+    <button class="btn" [class.btn-primary]="filtroTipo === 'VIDEO'" [class.btn-outline-secondary]="filtroTipo !== 'VIDEO'"
+            (click)="filtrarPorTipo('VIDEO')">
+      <i class="fas fa-video me-1"></i> Videos
+    </button>
+    <button class="btn" [class.btn-primary]="filtroTipo === 'ARTICULO'" [class.btn-outline-secondary]="filtroTipo !== 'ARTICULO'"
+            (click)="filtrarPorTipo('ARTICULO')">
+      <i class="fas fa-newspaper me-1"></i> Artículos
+    </button>
+    <button class="btn" [class.btn-primary]="filtroTipo === 'PODCAST'" [class.btn-outline-secondary]="filtroTipo !== 'PODCAST'"
+            (click)="filtrarPorTipo('PODCAST')">
+      <i class="fas fa-podcast me-1"></i> Podcasts
+    </button>
+  </div>
+
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Buscar por título..."
+               [(ngModel)]="filtroBusqueda"
+               (keyup.enter)="buscar()">
+        <button class="btn btn-primary" (click)="buscar()">Buscar</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="text-center p-5">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading" class="row g-4">
+
+    <div *ngIf="recursos.length === 0" class="col-12">
+      <div class="alert alert-warning text-center">
+        No se encontraron recursos que coincidan con tus filtros.
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-4" *ngFor="let recurso of recursos">
+      <div class="card h-100 shadow-sm resource-card">
+
+        <div [ngSwitch]="recurso.id" class="resource-card-image-container">
+
+          <img *ngSwitchCase="1" src="assets/imagenes/recurso-1.jpeg" class="resource-card-image" [alt]="recurso.titulo">
+          <img *ngSwitchCase="2" src="assets/imagenes/recurso-2.jpg" class="resource-card-image" [alt]="recurso.titulo">
+          <img *ngSwitchCase="3" src="assets/imagenes/recurso-3.jpg" class="resource-card-image" [alt]="recurso.titulo">
+          <img *ngSwitchCase="4" src="assets/imagenes/recurso-4.jpeg" class="resource-card-image" [alt]="recurso.titulo">
+          <img *ngSwitchCase="5" src="assets/imagenes/recurso-5.jpg" class="resource-card-image" [alt]="recurso.titulo">
+          <img *ngSwitchCase="6" src="assets/imagenes/recurso-6.jpg" class="resource-card-image" [alt]="recurso.titulo">
+          <img *ngSwitchCase="7" src="assets/imagenes/recurso-7.jpeg" class="resource-card-image" [alt]="recurso.titulo">
+          <img *ngSwitchCase="8" src="assets/imagenes/recurso-8.jpg" class="resource-card-image" [alt]="recurso.titulo">
+
+          <img *ngSwitchDefault src="assets/images/recursos/default.png" class="resource-card-image" [alt]="recurso.titulo">
+        </div>
+
+        <div class="card-body d-flex flex-column">
+          <div class="mb-2">
+            <span class="badge" [ngClass]="{
+              'bg-primary': recurso.tipo === 'VIDEO',
+              'bg-success': recurso.tipo === 'ARTICULO',
+              'bg-info': recurso.tipo === 'PODCAST'
+            }">{{ recurso.tipo }}</span>
+            <span class="badge bg-secondary ms-2">{{ recurso.tema | titlecase }}</span>
+          </div>
+          <h5 class="card-title fw-bold text-green">{{ recurso.titulo }}</h5>
+          <p class="card-text text-secondary small">Fuente: {{ recurso.fuente }}</p>
+
+          <div class="mt-auto">
+            <a [href]="recurso.url" target="_blank" class="btn btn-primary w-100">
+              Ver Recurso <i class="fas fa-external-link-alt ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav *ngIf="!isLoading && pageInfo && pageInfo.totalPages > 1" class="d-flex justify-content-center mt-5">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="pageInfo.number === 0">
+        <a class="page-link" href="javascript:void(0);" (click)="irAPagina(pageInfo.number - 1)">Anterior</a>
+      </li>
+      <li class="page-item" [class.disabled]="pageInfo.number + 1 >= pageInfo.totalPages">
+        <a class="page-link" href="javascript:void(0);" (click)="irAPagina(pageInfo.number + 1)">Siguiente</a>
+      </li>
+    </ul>
+  </nav>
+
+</main>

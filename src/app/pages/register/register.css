@@ -1,0 +1,93 @@
+/* :host asegura que el componente ocupe toda la altura */
+:host {
+  display: block;
+  height: 100vh;
+  background-color: #f4f7f6; /* Color de fondo base */
+  background-image: linear-gradient(to top right, #e0f2f1, #8cdfdf);
+}
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 1rem;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 1.5rem 2rem 2rem 2rem;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 1.5rem !important;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 1rem;
+}
+
+.login-header h2 {
+  font-weight: 700;
+  color: rgba(20, 84, 168, 0.73);
+}
+
+.login-header p {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.login-actions {
+  margin-top: 1rem;
+}
+
+.login-actions button {
+  padding: 12px 0 !important;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #7093cc !important;
+}
+
+.error-message {
+  color: #376180;
+  background-color: rgb(90, 113, 140);
+  border: 1px solid rgba(98, 139, 191, 0.73);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #6c757d;
+}
+
+.register-link a {
+  color: rgba(98, 139, 191, 0.73);
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+.login-actions button {
+  color: white !important;
+}
+
+

@@ -1,0 +1,95 @@
+<app-header></app-header>
+
+<main class="container">
+  <h1 class="text-center color-green fs-2 fw-bold my-4">Registro de actividades diarias</h1>
+
+  <form class="form-container" (ngSubmit)="onSubmit()" #transporteForm="ngForm">
+
+    <div class="form-section">
+      <h2 class="fs-3 text-center">1. Transporte</h2>
+      <p class="fs-6">1. ¿Qué medio de transporte usaste hoy? (Selecciona todas las que utilizaste)</p>
+
+      <div class="checkbox-group">
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="checkbox" name="auto_check" [(ngModel)]="mediosSeleccionados.auto"> Auto propio
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="checkbox" name="moto_check" [(ngModel)]="mediosSeleccionados.moto"> Moto
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="checkbox" name="public_check" [(ngModel)]="mediosSeleccionados.public"> Transporte público
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="checkbox" name="bike_check" [(ngModel)]="mediosSeleccionados.bike"> Bicicleta
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="checkbox" name="walk_check" [(ngModel)]="mediosSeleccionados.walk"> A pie
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="checkbox" name="plane_check" [(ngModel)]="mediosSeleccionados.plane"> Avión
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label for="distance" class="fs-6 mb-4">Si usaste auto o moto, introduce la distancia total recorrida (en km):</label>
+      <div class="input-group d-flex align-items-center gap-3">
+        <i class="fa-solid fa-car fs-1"></i>
+        <input type="number" id="distance" name="distance" class="form-control" placeholder="Distancia en km"
+               [(ngModel)]="formData.distance"
+               [disabled]="!mediosSeleccionados.auto && !mediosSeleccionados.moto"
+               min="0"> </div>
+    </div>
+
+    <div class="form-section">
+      <h2 class="font-subtitle-lg text-center">Tipo de combustible de tu vehículo:</h2>
+      <div class="checkbox-group" [class.disabled-group]="!mediosSeleccionados.auto && !mediosSeleccionados.moto">
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="gasoline" name="fuel" [(ngModel)]="formData.fuel" [disabled]="!mediosSeleccionados.auto && !mediosSeleccionados.moto"> Gasolina
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="diesel" name="fuel" [(ngModel)]="formData.fuel" [disabled]="!mediosSeleccionados.auto && !mediosSeleccionados.moto"> Diésel
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="electric" name="fuel" [(ngModel)]="formData.fuel" [disabled]="!mediosSeleccionados.auto && !mediosSeleccionados.moto"> Eléctrico
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="hybrid" name="fuel" [(ngModel)]="formData.fuel" [disabled]="!mediosSeleccionados.auto && !mediosSeleccionados.moto"> Híbrido
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label for="fuelConsumption" class="fs-6 mb-4">Consumo de combustible de tu vehículo (en L/100 km):</label>
+      <div class="input-group d-flex align-items-center gap-3">
+        <i class="fa-solid fa-gas-pump fs-1"></i>
+        <input type="number" id="fuelConsumption" name="fuelConsumption" class="form-control"
+               placeholder="Litros por 100 km" [(ngModel)]="formData.fuelConsumption"
+               [disabled]="!mediosSeleccionados.auto && !mediosSeleccionados.moto"
+               min="0"> </div>
+    </div>
+
+    <div class="form-section">
+      <label for="flightDistance" class="fs-6 mb-4">Si viajaste en avión, ¿cuántos kilómetros volaste?:</label>
+      <div class="input-group d-flex align-items-center gap-3">
+        <i class="fa-solid fa-plane fs-1"></i>
+        <input type="number" id="flightDistance" name="flightDistance" class="form-control"
+               placeholder="Kilómetros volados" [(ngModel)]="formData.flightDistance"
+               [disabled]="!mediosSeleccionados.plane"
+               min="0"> </div>
+    </div>
+
+    <div class="content_button d-flex justify-content-between mt-4">
+      <div class="submit-button">
+        <button type="button" (click)="goBack()" class="btn btn-outline-primary">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+      </div>
+      <div class="submit-button">
+        <button type="submit" class="btn btn-primary" [disabled]="!transporteForm.form.valid">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</main>

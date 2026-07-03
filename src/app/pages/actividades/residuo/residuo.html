@@ -1,0 +1,53 @@
+<app-header></app-header>
+
+<main class="container">
+  <h1 class="text-center color-green fs-2 fw-bold my-4">Registro de actividades diarias</h1>
+
+  <form class="form-container" (ngSubmit)="onSubmit()" #residuoForm="ngForm">
+    <div class="form-header">
+      <h1 class="fs-3 text-center">3. Consumo y residuos</h1>
+    </div>
+
+    <div class="form-section">
+      <label class="fs-6">1. ¿Reciclaste hoy?</label>
+      <div class="checkbox-group">
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="yes"
+                 name="recycled" [(ngModel)]="formData.recycled" required>
+          Sí
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="no"
+                 name="recycled" [(ngModel)]="formData.recycled" required>
+          No
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label for="wasteAmount" class="fs-6">Cantidad de residuos generados hoy (en kg):</label>
+      <div class="input-group d-flex align-items-center gap-3 mt-3">
+        <i class="fas fa-recycle fs-1"></i>
+        <input type="number" id="wasteAmount" name="wasteAmount" class="form-control"
+               placeholder="Introduce la cantidad de residuos"
+               [(ngModel)]="formData.wasteAmount"
+               required
+               min="0">
+      </div>
+    </div>
+
+    <div class="content_button">
+      <div class="submit-button">
+        <button type="button" (click)="goBack()" class="btn btn-outline-primary">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+      </div>
+      <div class="submit-button">
+        <!-- 4. Botón deshabilitado si el formulario no es válido -->
+        <button type="submit" class="btn btn-primary" [disabled]="!residuoForm.form.valid">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</main>

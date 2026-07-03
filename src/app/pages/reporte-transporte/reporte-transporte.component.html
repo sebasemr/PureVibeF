@@ -1,0 +1,174 @@
+<app-header></app-header>
+
+<div class="reporte-page">
+
+  <!-- Título de página -->
+  <div class="reporte-title-bar">
+    <div class="reporte-title-inner">
+      <i class="fas fa-chart-bar"></i>
+      <div>
+        <h1>Reporte de Transporte</h1>
+        <p>Visualiza y filtra tus actividades de transporte registradas</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reporte-body">
+
+    <!-- Panel de filtros -->
+    <div class="filtros-card">
+      <div class="filtros-card__header">
+        <i class="fas fa-filter"></i>
+        <h3>Filtros</h3>
+      </div>
+
+      <div class="filtros-grid">
+        <!-- Tipo de combustible -->
+        <div class="filtro-group">
+          <label class="filtro-label">Tipo de Combustible</label>
+          <select class="filtro-select" [(ngModel)]="tipoCombustible">
+            <option *ngFor="let t of tiposCombustible" [value]="t.valor">{{ t.label }}</option>
+          </select>
+        </div>
+
+        <!-- Distancia mínima -->
+        <div class="filtro-group">
+          <label class="filtro-label">Distancia mínima (km)</label>
+          <input class="filtro-input" type="number" [(ngModel)]="distanciaMinKm"
+                 placeholder="Ej: 0" min="0">
+        </div>
+
+        <!-- Distancia máxima -->
+        <div class="filtro-group">
+          <label class="filtro-label">Distancia máxima (km)</label>
+          <input class="filtro-input" type="number" [(ngModel)]="distanciaMaxKm"
+                 placeholder="Ej: 100" min="0">
+        </div>
+      </div>
+
+      <div class="filtros-actions">
+        <button class="btn-buscar" (click)="buscar()" [disabled]="loading">
+          <i class="fas fa-search"></i>
+          {{ loading ? 'Buscando...' : 'Buscar' }}
+        </button>
+        <button class="btn-limpiar" (click)="limpiarFiltros()" [disabled]="loading">
+          <i class="fas fa-times"></i>
+          Limpiar
+        </button>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div class="alert-error" *ngIf="error">
+      <i class="fas fa-exclamation-circle"></i>
+      {{ error }}
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-state" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Cargando reporte...</p>
+    </div>
+
+    <!-- Resumen de resultados -->
+    <div class="resumen-grid" *ngIf="!loading && reporte.length > 0">
+      <div class="resumen-card">
+        <div class="resumen-card__icon" style="background:#E3F2FD">
+          <i class="fas fa-list" style="color:#1565C0"></i>
+        </div>
+        <div class="resumen-card__info">
+          <span class="resumen-card__val">{{ reporte.length }}</span>
+          <span class="resumen-card__lbl">Actividades</span>
+        </div>
+      </div>
+      <div class="resumen-card">
+        <div class="resumen-card__icon" style="background:#E8F5E9">
+          <i class="fas fa-road" style="color:#2E7D32"></i>
+        </div>
+        <div class="resumen-card__info">
+          <span class="resumen-card__val">{{ totalKm | number:'1.1-1' }} km</span>
+          <span class="resumen-card__lbl">Distancia total</span>
+        </div>
+      </div>
+      <div class="resumen-card">
+        <div class="resumen-card__icon" style="background:#FFF8E1">
+          <i class="fas fa-gas-pump" style="color:#F59E0B"></i>
+        </div>
+        <div class="resumen-card__info">
+          <span class="resumen-card__val">{{ totalConsumo | number:'1.1-1' }} L</span>
+          <span class="resumen-card__lbl">Consumo total</span>
+        </div>
+      </div>
+      <div class="resumen-card">
+        <div class="resumen-card__icon" style="background:#EDE7F6">
+          <i class="fas fa-car" style="color:#6A1B9A"></i>
+        </div>
+        <div class="resumen-card__info">
+          <span class="resumen-card__val" style="font-size:0.9rem">{{ medios }}</span>
+          <span class="resumen-card__lbl">Medios usados</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla de resultados -->
+    <div class="tabla-card" *ngIf="!loading && buscado">
+
+      <!-- Sin resultados -->
+      <div class="empty-state" *ngIf="reporte.length === 0 && !error">
+        <i class="fas fa-car-side"></i>
+        <p>No se encontraron actividades de transporte con los filtros aplicados.</p>
+        <button class="btn-limpiar" (click)="limpiarFiltros()">Ver todos los registros</button>
+      </div>
+
+      <!-- Tabla -->
+      <div class="tabla-wrapper" *ngIf="reporte.length > 0">
+        <div class="tabla-header-row">
+          <h3>Detalle de actividades</h3>
+          <span class="tabla-count">{{ reporte.length }} registro(s)</span>
+        </div>
+
+        <div class="tabla-responsive">
+          <table class="tabla">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Medio</th>
+                <th>Combustible</th>
+                <th>Distancia (km)</th>
+                <th>Consumo (L/100km)</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of reporte">
+                <td>
+                  <span class="fecha-badge">
+                    <i class="fas fa-calendar-alt"></i>
+                    {{ r.fecha | date:'dd/MM/yyyy' }}
+                  </span>
+                </td>
+                <td>
+                  <span class="medio-badge">
+                    <i class="fas {{ getMedioIcon(r.medio) }}"></i>
+                    {{ r.medio || '—' }}
+                  </span>
+                </td>
+                <td>
+                  <span class="combustible-badge"
+                        [style.background]="getCombustibleColor(r.tipoCombustible) + '20'"
+                        [style.color]="getCombustibleColor(r.tipoCombustible)">
+                    {{ getCombustibleLabel(r.tipoCombustible) }}
+                  </span>
+                </td>
+                <td class="num-cell">{{ r.distanciaKm | number:'1.1-1' }}</td>
+                <td class="num-cell">{{ r.consumoLitros100km | number:'1.2-2' }}</td>
+                <td class="desc-cell">{{ r.descripcion || '—' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

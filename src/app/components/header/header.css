@@ -1,0 +1,155 @@
+.container-header {
+  width: 100%;
+  max-width: 1440px;
+  gap: 16px;
+  padding-inline: 16px !important;
+}
+
+@media (min-width: 700px) {
+  .container-header {
+    padding-inline: 24px !important;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 991px) {
+  .container-header .nav-item a:hover {
+    font-weight: 700 !important;
+  }
+
+  ul.dropdown-menu--header__services {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin-top: 0px !important;
+    padding-block: 0px !important;
+    padding-left: 8px !important;
+  }
+
+  ul.dropdown-menu--header__services a {
+    padding-left: 0 !important;
+  }
+
+  ul.dropdown-menu--header__services a:hover {
+    background: transparent !important;
+    font-weight: 700;
+  }
+}
+
+@media (min-width: 992px) {
+  ul.dropdown-menu--header__services {
+    width: 200px;
+  }
+}
+
+.notification-bell {
+  position: relative;
+  font-size: 1.2rem;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: #dc3545;
+  color: #5d7dcd;
+  border-radius: 50%;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  border: 2px solid rgba(98, 139, 191, 0.73);
+}
+
+.notification-dropdown {
+  width: 350px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.dropdown-header {
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+}
+
+.notification-item {
+  padding: 0.75rem 1rem;
+  white-space: normal;
+  border-bottom: 1px solid #5a718c;
+}
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item:hover {
+  background-color: #f8f9fa;
+}
+
+.notification-item small {
+  font-size: 0.8rem;
+}
+
+/* ── PureVibe navbar: fondo azul, links blancos ── */
+header .nav-link,
+header .navbar-brand,
+header .dropdown-toggle {
+  color: #ffffff !important;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
+header .nav-link:hover,
+header .dropdown-toggle:hover {
+  color: #B3E5FC !important;
+}
+
+header .navbar-toggler {
+  border-color: rgba(255,255,255,0.5) !important;
+}
+
+header .navbar-toggler-icon {
+  filter: invert(1);
+}
+
+header .form-control {
+  background: rgba(255,255,255,0.15) !important;
+  border-color: rgba(255,255,255,0.3) !important;
+  color: #ffffff !important;
+}
+
+header .form-control::placeholder {
+  color: rgba(255,255,255,0.6) !important;
+}
+
+header .fa-magnifying-glass {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+header .btn-primary {
+  background-color: #ffffff !important;
+  color: #1565C0 !important;
+  border: none !important;
+  font-weight: 700;
+  border-radius: 8px;
+}
+
+header .btn-primary:hover {
+  background-color: #E3F2FD !important;
+  color: #0D47A1 !important;
+}
+
+header .fa-bell,
+header .fa-dollar-sign,
+header .fa-user {
+  color: #ffffff !important;
+}
+
+/* Dropdown menú */
+header .dropdown-menu {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
+}
+
+header .dropdown-item:hover {
+  background-color: #E3F2FD !important;
+  color: #1565C0 !important;
+}
