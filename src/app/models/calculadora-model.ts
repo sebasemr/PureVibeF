@@ -1,7 +1,7 @@
 export class CalculadoraPersonal {
   usuarioId?: number;
 
-  horasBusSemana: number = 0;
+  
   horasTrenSemana: number = 0;
   horasMetropolitanoSemana: number = 0;
   horasAutoSemana: number = 0;
